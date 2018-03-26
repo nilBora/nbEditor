@@ -1,6 +1,6 @@
 <?php
 
-namespace nnEditor\Core\Helpers;
+namespace nbEditor\Core\Helpers;
 
 class HelperFacade
 {
@@ -41,7 +41,7 @@ class HelperFacade
     public function &get($name, $construct = false)
     {
         if (!isset(static::$_helpers[$name])) {
-            $name = "\\nnEditor\Core\Helpers\\".$name;
+            $name = "\\nbEditor\Core\Helpers\\".$name;
             if (!class_exists($name)) {
                 throw new HelperFacadeException(sprintf('Class Not Found. %s', $name));
             }

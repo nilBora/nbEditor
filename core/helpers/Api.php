@@ -1,7 +1,7 @@
 <?php   
-namespace nnEditor\Core\Helpers;
+namespace nbEditor\Core\Helpers;
 
-use nnEditor\Core\Helpers\HelperFacade;
+use nbEditor\Core\Helpers\HelperFacade;
 
 class Api
 {

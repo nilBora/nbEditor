@@ -1,8 +1,8 @@
 <?php
 
-namespace nnEditor\Core;
+namespace nbEditor\Core;
 
-use nnEditor\Core\Display;
+use nbEditor\Core\Display;
 
 class Backend extends Display
 {

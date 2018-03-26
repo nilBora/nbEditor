@@ -5,79 +5,79 @@ $routes = array(
         'use'       => 'Backend@onDisplayDefault',
         'auth'      => true,
         'group'     => 'backend',
-        'namespace' => 'nnEditor\Core'
+        'namespace' => 'nbEditor\Core'
     ),
     '/files/' => array(
         'use'       => 'Backend@onDisplayDefault',
         'auth'      => true,
         'group'     => 'backend',
-        'namespace' => 'nnEditor\Core'
+        'namespace' => 'nbEditor\Core'
     ),
     '/filemanager/' => array(
         'use'       => 'Backend@onDisplayFileManager',
         'auth'      => true,
         'group'     => 'backend',
-        'namespace' => 'nnEditor\Core'
+        'namespace' => 'nbEditor\Core'
     ),
     '/save/filemanager/' => array(
         'use'       => 'Backend@onAjaxFileManager',
         'auth'      => true,
         'group'     => 'backend',
-        'namespace' => 'nnEditor\Core'
+        'namespace' => 'nbEditor\Core'
     ),
     '/history/' => array(
         'use'       => 'Backend@onDisplayHistory',
         'auth'      => true,
         'group'     => 'backend',
-        'namespace' => 'nnEditor\Core'
+        'namespace' => 'nbEditor\Core'
     ),
     '/save/history/' => array(
         'use'       => 'Backend@onAjaxHistory',
         'auth'      => true,
         'group'     => 'backend',
-        'namespace' => 'nnEditor\Core'
+        'namespace' => 'nbEditor\Core'
     ),
     '/content/save/file/' => array(
         'use'       => 'Backend@onAjaxSaveFilePath',
         'auth'      => true,
         'group'     => 'backend',
-        'namespace' => 'nnEditor\Core'
+        'namespace' => 'nbEditor\Core'
     ),
     '/content/edit/' => array(
         'use'       => 'Backend@onDisplayEdit',
         'auth'      => true,
         'group'     => 'backend',
-        'namespace' => 'nnEditor\Core'
+        'namespace' => 'nbEditor\Core'
     ),
     '/login/' => array(
         'use'       => 'Auth@onDisplayLogin',
         'auth'      => false,
         'group'     => 'backend',
-        'namespace' => 'nnEditor\Core'
+        'namespace' => 'nbEditor\Core'
     ),
     '/auth/' => array(
         'use'       => 'Auth@onAuth',
         'auth'      => false,
         'group'     => 'backend',
-        'namespace' => 'nnEditor\Core'
+        'namespace' => 'nbEditor\Core'
     ),
     '/logout/' => array(
         'use'       => 'Auth@onLogout',
         'auth'      => false,
         'group'     => 'backend',
-        'namespace' => 'nnEditor\Core'
+        'namespace' => 'nbEditor\Core'
     ),
     '/load/panel/' => array(
         'use'       => 'Frontend@fetchPanel',
         'auth'      => false,
         'group'     => 'frontend',
-        'namespace' => 'nnEditor\Core'
+        'namespace' => 'nbEditor\Core'
     ),
     '/save/content/' => array(
         'use'       => 'Frontend@onAjaxSaveContent',
         'auth'      => false,
         'group'     => 'frontend',
-        'namespace' => 'nnEditor\Core'
+        'namespace' => 'nbEditor\Core'
     )
 );
 

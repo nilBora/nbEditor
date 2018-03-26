@@ -1,7 +1,7 @@
 <?php
-namespace nnEditor\Core;
+namespace nbEditor\Core;
 
-use nnEditor\Core\Controller;
+use nbEditor\Core\Controller;
 
 class Container
 {
@@ -41,7 +41,7 @@ class Container
     
     protected static function call($controller, $method, $params = [])
     {
-        $response = new \nnEditor\Core\Response();
+        $response = new \nbEditor\Core\Response();
         $args = [];
         $args[] = &$response;
         $params = array_merge($args, $params);

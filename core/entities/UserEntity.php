@@ -1,8 +1,8 @@
 <?php
 
-namespace nnEditor\Core\Entities;
+namespace nbEditor\Core\Entities;
 
-use nnEditor\Core\Entities\Entity;
+use nbEditor\Core\Entities\Entity;
 
 class UserEntity extends Entity
 {

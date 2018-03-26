@@ -1,7 +1,8 @@
 <?php
-namespace nnEditor\Core\tmpengine;
+namespace nbEditor\Core\tmpengine;
 
-use nnEditor\Core\Controller;
+use nbEditor\Core\Controller;
+use nbEditor\Core\Container;
 
 class tmpEngine
 {
@@ -60,7 +61,7 @@ class tmpEngine
        
         foreach ($containers as $key => $container) {
             $container = str_replace(array('\'', '"'), '', $container);
-            $result = \nnEditor\Core\Container::show($container);
+            $result = Container::show($container);
             
             $template = str_replace($search[$key], $result, $template);
         }

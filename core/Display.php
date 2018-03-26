@@ -1,9 +1,9 @@
 <?php
 
-namespace nnEditor\Core;
+namespace nbEditor\Core;
 
-use nnEditor\Core\Dispatcher;
-use nnEditor\Core\tmpengine\tmpEngine;
+use nbEditor\Core\Dispatcher;
+use nbEditor\Core\tmpengine\tmpEngine;
 
 class Display extends Dispatcher
 {
@@ -17,7 +17,7 @@ class Display extends Dispatcher
 
         //$pathTeplate = $this->getTeplatePah();
         if (!$path) {
-            $path = \nnEditor\Core\Controller::getInstance()->getTeplatePah();
+            $path = \nbEditor\Core\Controller::getInstance()->getTeplatePah();
         }
         
         $this->__path = $path;

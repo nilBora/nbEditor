@@ -6,7 +6,7 @@ try {
     $options = array(
         'group' => 'backend'
     );
-    $app = nnEditor\Core\Controller::getInstance($options);
+    $app = nbEditor\Core\Controller::getInstance($options);
      
     $app->start();
     

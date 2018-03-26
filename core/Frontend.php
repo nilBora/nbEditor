@@ -1,9 +1,9 @@
 <?php
     
-namespace nnEditor\Core;
+namespace nbEditor\Core;
 
 //use nnEditor\Core\DomEditor;
-use nnEditor\Core\Display;
+use nbEditor\Core\Display;
 
 class Frontend extends Display
 {
@@ -67,7 +67,7 @@ class Frontend extends Display
 
         if (!is_dir(FS_BACKUP) && !mkdir(FS_BACKUP, 0777, true)) {
             $msg = sprintf("Can't create directory: %s", $path);
-            throw new Exception($msg);
+            throw new PermissionException($msg);
         }
         
         file_put_contents(FS_BACKUP.$url, $content);
@@ -95,7 +95,7 @@ class Frontend extends Display
         $content = $dom->doSaveBodyContent($contentBody);
 
         if (!file_put_contents(FS_BACKUP.$urlPost, $content)) {
-            throw new Exception('File Not Save');
+            throw new PermissionException('File Not Save');
         }
         
         $response->content = array('save' => 'ok');

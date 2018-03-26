@@ -1,5 +1,5 @@
 <?php
-namespace nnEditor\Core\Entities;
+namespace nbEditor\Core\Entities;
 
 abstract class Entity
 {

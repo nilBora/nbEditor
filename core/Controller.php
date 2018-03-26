@@ -1,14 +1,14 @@
 <?php
-namespace nnEditor\Core;
+namespace nbEditor\Core;
 
-use nnEditor\Core\Frontend;
-use nnEditor\Core\Backend;
-use nnEditor\Core\Response;
-use nnEditor\Core\Helpers\HelperFacade;
-use nnEditor\Core\Auth;
+use nbEditor\Core\Frontend;
+use nbEditor\Core\Backend;
+use nbEditor\Core\Response;
+use nbEditor\Core\Helpers\HelperFacade;
+use nbEditor\Core\Auth;
 
 
-class Controller extends \nnEditor\Core\Dispatcher
+class Controller extends \nbEditor\Core\Dispatcher
 {
     private static $_instance = null;
     private static $_bundles = null;
@@ -322,7 +322,7 @@ class Controller extends \nnEditor\Core\Dispatcher
     
     public function getStaticPath()
     {
-        return '/nbEditor/static/backend/';
+        return $this->getConfig('http_static');
     }
 }
 

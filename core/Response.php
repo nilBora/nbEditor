@@ -1,9 +1,9 @@
 <?php
 
-namespace nnEditor\Core;
-use nnEditor\Core\Display;
+namespace nbEditor\Core;
+use nbEditor\Core\Display;
 
-class Response extends \nnEditor\Core\Dispatcher
+class Response extends \nbEditor\Core\Dispatcher
 {
     const TYPE_NORMAL = 'normal';
     const TYPE_JSON = 'json';

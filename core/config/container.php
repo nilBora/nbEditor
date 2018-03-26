@@ -2,7 +2,7 @@
 $settings = [
     'LEFT' => [
         'widget1'    => [
-            'use'    => 'nnEditor\Core\Backend',
+            'use'    => 'nbEditor\Core\Backend',
             'method' => 'onDisplayLeftMenu',
             'params' => array()
         ]

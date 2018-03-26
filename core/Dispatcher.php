@@ -1,8 +1,8 @@
 <?php
 
-namespace nnEditor\Core;
-use nnEditor\Core\Helpers\HelperFacade;
-use nnEditor\Core\Entities\UserEntity;
+namespace nbEditor\Core;
+use nbEditor\Core\Helpers\HelperFacade;
+use nbEditor\Core\Entities\UserEntity;
 
 use ArrayObject;
 

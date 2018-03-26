@@ -1,6 +1,6 @@
 <?php
 
-namespace nnEditor\Core\Helpers;
+namespace nbEditor\Core\Helpers;
 
 class Route
 {
