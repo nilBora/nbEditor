@@ -64,6 +64,12 @@ class Frontend extends Display
         
         //XXX: save history file
         $url = $this->_request->get('url');
+
+        if (!is_dir(FS_BACKUP) && !mkdir(FS_BACKUP, 0777, true)) {
+            $msg = sprintf("Can't create directory: %s", $path);
+            throw new Exception($msg);
+        }
+        
         file_put_contents(FS_BACKUP.$url, $content);
         
         $content = $this->_dom->getContentWithAdminPanel();
