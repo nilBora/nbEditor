@@ -320,9 +320,13 @@ class Controller extends \nbEditor\Core\Dispatcher
         return $this->_config;
     }
     
-    public function getStaticPath()
+    public function getStaticPath($path = false)
     {
-        return $this->getConfig('http_static');
+        $basePath = $this->getConfig('http_static');
+        if ($path) {
+            $basePath = $basePath.$path;
+        }
+        return $basePath;
     }
 }
 

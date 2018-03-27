@@ -6,7 +6,8 @@ var nnCore = {
         tag: '.nneditor-tag',
         tagChange: '.nneditor-tag-change'
     },
-    
+    lastRange: false,
+        
     onInit: function() {
         
         //this.initJS();
@@ -25,15 +26,19 @@ var nnCore = {
         this.onInitColorPicker();
     },
     
+    getFrontendUrl: function(url) {
+        return "/nbEditor/index.php?url="+url;
+    },
+    
     initJS: function() {
         
         if (!window.jQuery) {
             jQuery('head').append('<script type="text/javascript" src="/js/jquery.js"></script>');
         }
         
-        this.initCss();
+        this.includeCss();
         
-        jQuery.post( "/nbEditor/index.php?url=/load/panel/", {}, function(data) {
+        jQuery.post(this.getFrontendUrl('/load/panel/'), {}, function(data) {
             jQuery('.nn-editor-content').html(data);
            
         });
@@ -42,7 +47,7 @@ var nnCore = {
 
     },
     
-    initCss: function() {
+    includeCss: function() {
         
         var links = [
             'css/contenteditable.css',
@@ -94,12 +99,6 @@ var nnCore = {
             jQuery(this).addClass('nneditor-tag-change');
             nnCore.lastElement = jQuery(this, window.document);
         });
-        
-/*
-        this.getParentObj(this.selectors.tag).on('click', function() {
-            nnCore.lastElement = jQuery(this);
-        });
-*/
     },
     
     appendContentEditable: function() {
@@ -169,30 +168,50 @@ var nnCore = {
             e.preventDefault();
             nnCore.appendUserTag(jQuery(this));
         });
+        
+        
     },
     
-    appendUserTag: function($this) {
-        
+    appendUserTag: function($this, last = false) {
         var tag = $this.data('nn-tag');
 
-        var content = nnCore.lastElement.html();
-        
-        if (nnCore.hasUserTag()) {
-            //nnCore.lastElement.first().children().contents().unwrap();
-        }
         nnCore.lastElement.addClass('nnEditor-user-tag');
         if (tag == 'textDecoration') {
-
-            //nnCore.lastElement.focus();
             
             var range, sel, command, commandParam;
+            
+            if (last && nnCore.lastElement && nnCore.lastElement[0]) {
+                
+                var $newSelection = nnCore.lastElement;
+                var selection = window.getSelection();
+                var range = document.createRange();
+                
+/*
+                if (nnCore.lastRange) {
+                     console.log(nnCore.lastRange.startOffset);
+                     console.log(nnCore.lastRange.endOffset);
+    
+                }
+*/
+                range.setStartBefore($newSelection.first()[0]);
+                range.setEndAfter($newSelection.last()[0]);
+                selection.removeAllRanges();
+                selection.addRange(range);
+                
+                nnCore.lastElement[0].focus();
+            }
+            
             if (window.getSelection) {
-
                 // Non-IE case
                 sel = window.getSelection();
-                if (sel.getRangeAt) {
+                if (!range && sel.getRangeAt) {
                     range = sel.getRangeAt(0);
                 }
+                
+                nnCore.lastRange = range;
+                
+                
+                //startOffset: 0, endContainer: text, endOffset: 6
                 window.document.designMode = "on";
                 if (range) {
                     sel.removeAllRanges();
@@ -213,8 +232,6 @@ var nnCore = {
                 
                 var newNode = window.getSelection().focusNodeNode;
                 jQuery(newNode).addClass("nnEditor-user-tag");
-                //jQuery(newNode).attr('contenteditable', true);
-                
                 
                 window.document.designMode = "off";
             } else if (
@@ -239,7 +256,7 @@ var nnCore = {
                 nnCore.doClearCoreContent();
                 
                 var body = jQuery('body').html();
-                jQuery.post( "/nbEditor/index.php?url=/save/content/", {
+                jQuery.post(nnCore.getFrontendUrl('/save/content/'), {
                     'save': 1,
                     'url': jQuery('body').data('nneditor-url'),
                     'body': body,
@@ -260,11 +277,13 @@ var nnCore = {
         
         this.getParentObj('*').removeClass('nneditor-tag');
         this.getParentObj('*').removeClass('nnEditor-user-tag');
+        jQuery('.nn-editor-content').detach();
     },
     
     onInitColorPicker: function() {
         
-        jQuery('.nn-editor-content').on('click', '#colorSelector', function() {
+        jQuery('.nn-editor-content').on('click', '#colorSelector', function(e) {
+            e.preventDefault();
             var $this = jQuery(this);
             jQuery.getScript(nnCore.staticPath+'plugins/colorpicker/js/colorpicker.js', function() {
 
@@ -281,6 +300,7 @@ var nnCore = {
                 	onChange: function (hsb, hex, rgb) {
                 		jQuery('#colorSelector div').css('backgroundColor', '#' + hex);
                 		jQuery('.js-nn-panel-foreColor').attr('data-nn-param', '#'+hex);
+                		nnCore.appendUserTag(jQuery('.js-nn-panel-foreColor'), true);
                 	}
                 });
             });

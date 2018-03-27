@@ -6,6 +6,8 @@ use nbEditor\Core\Entities\Entity;
 
 class UserEntity extends Entity
 {
+    const USER_ROLE_ADMIN = 'admin';
+    
     public function getID()
     {
         if ($this->has('id')) {
@@ -31,6 +33,6 @@ class UserEntity extends Entity
     
     public function getRole()
     {
-        return 'admin';
+        return static::USER_ROLE_ADMIN;
     }
 }
