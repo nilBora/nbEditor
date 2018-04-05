@@ -2,7 +2,6 @@
     
 namespace nbEditor\Core;
 
-//use nnEditor\Core\DomEditor;
 use nbEditor\Core\Display;
 
 class Frontend extends Display
@@ -208,12 +207,15 @@ class Frontend extends Display
                 'param' => null,
                 'ident' => 'undo'
             ),
+/*
             array(
-                'name' => 'foreColor',
-                'caption' => 'Change Color',
-                'param' => 'FF0000',
-                'ident' => 'foreColor',
+                'name'       => 'foreColor',
+                'caption'    => '',
+                'param'      => 'FF0000',
+                'ident'      => 'foreColor',
+                'customHtml' => '<div id="colorSelector"><div style="background-color: #00ff00"></div></div>'
             )
+*/
             
         ); 
         

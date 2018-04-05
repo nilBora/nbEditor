@@ -85,17 +85,27 @@ var nnCore = {
     
     appnedChangeContentEditable: function() {
         
-        this.getParentObj(this.selectors.tag).on('focus', function() {
+        jQuery(this.selectors.tag).on('focus', function() {
             
-            nnCore.i('Focus: '+nnCore.getParentObj(this).prop("tagName").toLowerCase()); //
+            nnCore.i('Focus: '+jQuery(this).prop("tagName").toLowerCase()); //
            
             jQuery(this).addClass('nneditor-tag-change');
-            nnCore.lastElement = jQuery(this, window.document);
+            nnCore.lastElement = jQuery(this);
         });
         
         this.getParentObj(this.selectors.tag).dblclick(function() {
             nnCore.i('DblClick: '+nnCore.getParentObj(this).prop("tagName").toLowerCase()); //
             
+            
+/*
+            sel = window.getSelection();
+            if (sel.getRangeAt) {
+                var range = sel.getRangeAt(0);
+                 nnCore.lastRange = range
+            }
+*/
+            
+                        
             jQuery(this).addClass('nneditor-tag-change');
             nnCore.lastElement = jQuery(this, window.document);
         });
@@ -173,24 +183,34 @@ var nnCore = {
     },
     
     appendUserTag: function($this, last = false) {
+        
         var tag = $this.data('nn-tag');
-
+        
+        if (!nnCore.lastElement) {
+            return true;
+        }
+        
         nnCore.lastElement.addClass('nnEditor-user-tag');
         if (tag == 'textDecoration') {
             
             var range, sel, command, commandParam;
-            
+             
             if (last && nnCore.lastElement && nnCore.lastElement[0]) {
                 
                 var $newSelection = nnCore.lastElement;
                 var selection = window.getSelection();
                 var range = document.createRange();
-                
+                if (nnCore.lastRange) {
+                    range = nnCore.lastRange.cloneRange();
+                    console.log(range);
+                }             
 /*
                 if (nnCore.lastRange) {
                      console.log(nnCore.lastRange.startOffset);
                      console.log(nnCore.lastRange.endOffset);
-    
+
+                } else {
+                    
                 }
 */
                 range.setStartBefore($newSelection.first()[0]);
@@ -198,7 +218,7 @@ var nnCore = {
                 selection.removeAllRanges();
                 selection.addRange(range);
                 
-                nnCore.lastElement[0].focus();
+                //nnCore.lastElement[0].focus();
             }
             
             if (window.getSelection) {
@@ -208,7 +228,7 @@ var nnCore = {
                     range = sel.getRangeAt(0);
                 }
                 
-                nnCore.lastRange = range;
+                //nnCore.lastRange = range;
                 
                 
                 //startOffset: 0, endContainer: text, endOffset: 6
@@ -282,31 +302,58 @@ var nnCore = {
     
     onInitColorPicker: function() {
         
-        jQuery('.nn-editor-content').on('click', '#colorSelector', function(e) {
-            e.preventDefault();
-            var $this = jQuery(this);
-            jQuery.getScript(nnCore.staticPath+'plugins/colorpicker/js/colorpicker.js', function() {
-
-                 $this.ColorPicker({
-                    color: '#0000ff',
-                	onShow: function (colpkr) {
-                		$(colpkr).fadeIn(500);
-                		return false;
-                	},
-                	onHide: function (colpkr) {
-                		$(colpkr).fadeOut(500);
-                		return false;
-                	},
-                	onChange: function (hsb, hex, rgb) {
-                		jQuery('#colorSelector div').css('backgroundColor', '#' + hex);
-                		jQuery('.js-nn-panel-foreColor').attr('data-nn-param', '#'+hex);
-                		nnCore.appendUserTag(jQuery('.js-nn-panel-foreColor'), true);
-                	}
-                });
+        jQuery.getScript(nnCore.staticPath+'plugins/colorpicker/js/colorpicker.js', function() {
+            
+            var selection = "";
+            $('[contenteditable]').on('mouseup',function(){
+                selection = nnCore.getSelectionHtml();
             });
-           
-        })
-        
+            
+            jQuery('#colorSelector').ColorPicker({
+                color: '#0000ff',
+            	onShow: function (colpkr) {
+            		$(colpkr).fadeIn(500);
+            		return false;
+            	},
+            	onHide: function (colpkr) {
+            		$(colpkr).fadeOut(500);
+            		return false;
+            	},
+            	onChange: function (hsb, hex, rgb) {
+            		jQuery('#colorSelector div').css('backgroundColor', '#' + hex);
+            		jQuery('.js-nn-panel-foreColor').attr('data-nn-param', '#'+hex);
+                    nnCore.lastElement.html(function(){
+                        //var r = new RegExp("(" + selection + ")", "i"); // global match and ignore case flag
+                        //return this.innerHTML.replace(r,'<span style="color:#'+hex+'">'+selection+'</span>');     
+                        //XXX: FIX thi
+                        return this.textContent.replace(selection,'<span style="color:#'+hex+'">'+selection+'</span>');
+                    });
+            		//nnCore.appendUserTag(jQuery('.js-nn-panel-foreColor'), true);
+                    return false;
+            	},
+            	onBeforeShow: function(colpkr) {
+            	}
+            });
+        });
+    },
+    
+    getSelectionHtml: function() {
+        var html = "";
+        if (typeof window.getSelection != "undefined") {
+            var sel = window.getSelection();
+            if (sel.rangeCount) {
+                var container = document.createElement("div");
+                for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                    container.appendChild(sel.getRangeAt(i).cloneContents());
+                }
+                html = container.innerHTML;
+            }
+        } else if (typeof document.selection != "undefined") {
+            if (document.selection.type == "Text") {
+                html = document.selection.createRange().htmlText;
+            }
+        }
+        return html;
     }
 }
 

@@ -145,8 +145,8 @@ class Backend extends Display
     
     public function onAjaxSaveFilePath(Response &$response)
     {
-        $path = $_POST['path'];
-        $name = $_POST['name'];
+        $path = $this->getHelper('Request')->get('path');
+        $name = $this->getHelper('Request')->get('name');
         
         $filePath = $path.$name;
         
@@ -160,7 +160,8 @@ class Backend extends Display
     
     public function onAjaxFileManager(Response &$response)
     {
-        $path = realpath($_POST['path'])."/";
+        $path = $this->getHelper('Request')->get('path');
+        $path = realpath($path)."/";
         
         if (strcmp($path, FS_PROJECT) < 0) {       
             echo json_encode(array('erorr' => 1));
@@ -168,7 +169,7 @@ class Backend extends Display
         }
         $_SESSION['currentPath'] = $path;
         
-        if ($_POST['name'] == '..') {
+        if ($this->getHelper('Request')->get('name') == '..') {
             
             $_SESSION['currentPath'] =  $path;//str_replace('/../', '/', $_POST['path']);
 
@@ -183,10 +184,11 @@ class Backend extends Display
 
     public function onAjaxHistory(Response &$response)
     {
-        $_SESSION['currentBackupPath'] = $_POST['path'];
+        $path = $this->getHelper('Request')->get('path');
+        $_SESSION['currentBackupPath'] = $path;
 
-        if ($_POST['name'] == '..') {
-            $path = realpath($_POST['path'])."/";
+        if ($this->getHelper('Request')->get('name') == '..') {
+            $path = realpath($path)."/";
             $_SESSION['currentBackupPath'] = $path;//str_replace('/../', '/', $_POST['path']);
         }
         if (!empty($_SESSION['currentBackupPath'])) {
